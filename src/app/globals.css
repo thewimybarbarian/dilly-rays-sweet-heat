@@ -39,6 +39,11 @@
   100% { transform: scale(1); }
 }
 
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(185, 28, 28, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(185, 28, 28, 0.8); }
+}
+
 body {
   background-color: var(--color-heat-black);
   color: var(--color-heat-white);
