@@ -69,7 +69,7 @@ export default function RootLayout({
           {/* Interactive flame-chili peppers */}
           <FloatingBumper src="/images/flame-chill.png" alt="Flaming chili pepper" startX={78} startY={30} size={130} />
           <FloatingBumper src="/images/flame-chill.png" alt="Flaming chili pepper" startX={8} startY={55} size={95} bumpStrength={150} />
-          <FloatingBumper src="/images/flame-chill.png" alt="Flaming chili pepper" startX={85} startY={72} size={75} bumpRadius={120} />
+          <FloatingBumper src="/images/bottle.png" alt="Dilly Ray's Sweet Heat sauce bottle" startX={85} startY={72} size={140} bumpRadius={160} bumpStrength={120} bobDuration={7} bobDistance={12} />
           {/* Interactive pig mascot */}
           <FloatingBumper
             src="/images/pig.png"
