@@ -3,6 +3,7 @@ import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/components/cart/CartProvider";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -29,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${bebasNeue.variable} ${inter.variable}`}>
       <body className="min-h-screen">
-        <Navbar />
-        <main className="pt-16">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main className="pt-16">{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
