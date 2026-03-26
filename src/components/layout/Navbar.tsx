@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useCart } from "@/hooks/useCart";
+import CartDrawer from "@/components/cart/CartDrawer";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -12,6 +14,8 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const { itemCount } = useCart();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-heat-black border-b-4 border-heat-red">
@@ -46,6 +50,7 @@ export default function Navbar() {
               type="button"
               className="relative text-heat-white hover:text-heat-red transition-colors"
               aria-label="Shopping cart"
+              onClick={() => setCartOpen(true)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,9 +67,11 @@ export default function Navbar() {
                 />
               </svg>
               {/* Badge */}
-              <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-heat-red text-[10px] font-bold text-heat-white">
-                0
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-heat-red text-[10px] font-bold text-heat-white">
+                  {itemCount}
+                </span>
+              )}
             </button>
 
             {/* Hamburger */}
@@ -130,6 +137,7 @@ export default function Navbar() {
           ))}
         </div>
       )}
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </nav>
   );
 }
