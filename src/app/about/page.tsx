@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "Meet the team behind Dilly Ray's Sweet Heat. Our story, our double-decker bus, and the Sweet Heat philosophy.",
+};
 
 export default function AboutPage() {
   return (

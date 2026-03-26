@@ -3,9 +3,9 @@ import { CateringForm } from "@/components/contact/CateringForm";
 import { LocationSchedule } from "@/components/contact/LocationSchedule";
 
 export const metadata: Metadata = {
-  title: "Contact | Dilly Ray's Sweet Heat",
+  title: "Contact & Find the Bus",
   description:
-    "Find the bus, book us for your event, or just say hello. Dilly Ray's Sweet Heat BBQ.",
+    "Find where the Dilly Ray's bus is parked next. Book us for your event — weddings, corporate, festivals.",
 };
 
 const SOCIALS = [

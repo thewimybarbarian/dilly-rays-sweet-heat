@@ -17,9 +17,40 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Dilly Ray's Sweet Heat",
+  title: {
+    default: "Dilly Ray's Sweet Heat | BBQ Food Truck",
+    template: "%s | Dilly Ray's Sweet Heat",
+  },
   description:
-    "BBQ food truck serving bold, smoky flavors from our double-decker bus. Order online for pickup.",
+    "Bold BBQ from our double-decker bus. Smoked meats, sweet heat sauces, and a dining experience like no other. Order online for pickup.",
+  keywords: [
+    "BBQ",
+    "food truck",
+    "Nashville",
+    "smoked meats",
+    "double decker bus",
+    "sweet heat",
+    "barbecue",
+  ],
+  authors: [{ name: "Dilly Ray's Sweet Heat" }],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Dilly Ray's Sweet Heat",
+    title: "Dilly Ray's Sweet Heat | BBQ Food Truck",
+    description:
+      "Bold BBQ from our double-decker bus. Order online for pickup.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dilly Ray's Sweet Heat | BBQ Food Truck",
+    description:
+      "Bold BBQ from our double-decker bus. Order online for pickup.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

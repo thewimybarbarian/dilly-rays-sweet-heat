@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import type { MenuItem } from "@/types";
 import MenuGrid from "@/components/menu/MenuGrid";
+
+export const metadata: Metadata = {
+  title: "Menu",
+  description:
+    "Browse our full BBQ menu. Smoked brisket, pulled pork, sweet heat wings, and more.",
+};
 
 const MENU_ITEMS: MenuItem[] = [
   { id: "1", name: "Pulled Pork Sandwich", description: "Slow-smoked pulled pork with tangy slaw on a brioche bun", price: 1299, category: "mains", image_url: null, heat_level: 1, available: true, sort_order: 1, created_at: "" },
