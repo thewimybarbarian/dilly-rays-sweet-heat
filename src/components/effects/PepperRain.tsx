@@ -38,18 +38,31 @@ export default function PepperRain({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Load pepper image
+    // Detect mobile for reduced density
+    const isMobile =
+      window.innerWidth < 768 ||
+      ("ontouchstart" in window && window.innerWidth < 1024);
+    const effectiveDensity = isMobile ? Math.max(1, Math.floor(density / 2)) : density;
+    const spawnInterval = isMobile ? 20 : 10; // Spawn less often on mobile
+    const maxPeppers = isMobile ? 25 : 100; // Cap total peppers
+
     const img = new Image();
     img.src = "/images/pepper.svg";
     imageRef.current = img;
 
-    // Resize canvas to fill viewport
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
-    window.addEventListener("resize", resize);
+
+    // Debounced resize
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 200);
+    };
+    window.addEventListener("resize", debouncedResize);
 
     const spawnPepper = (): Pepper => ({
       x: Math.random() * canvas.width,
@@ -65,9 +78,12 @@ export default function PepperRain({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       frameCountRef.current++;
 
-      // Spawn new peppers every ~10 frames
-      if (frameCountRef.current % 10 === 0) {
-        for (let i = 0; i < density; i++) {
+      // Spawn new peppers
+      if (
+        frameCountRef.current % spawnInterval === 0 &&
+        peppersRef.current.length < maxPeppers
+      ) {
+        for (let i = 0; i < effectiveDensity; i++) {
           peppersRef.current.push(spawnPepper());
         }
       }
@@ -90,7 +106,7 @@ export default function PepperRain({
             -p.size / 2,
             -p.size / 2,
             p.size,
-            p.size
+            p.size,
           );
           ctx.restore();
         }
@@ -101,19 +117,17 @@ export default function PepperRain({
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    // Wait for image to load before starting animation
     img.onload = () => {
       animationRef.current = requestAnimationFrame(animate);
     };
-
-    // Fallback: start anyway if image loads from cache
     if (img.complete) {
       animationRef.current = requestAnimationFrame(animate);
     }
 
     return () => {
       cancelAnimationFrame(animationRef.current);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(resizeTimer);
       peppersRef.current = [];
     };
   }, [density, speed, wind, opacity]);

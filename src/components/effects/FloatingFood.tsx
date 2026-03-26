@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 /**
  * Each food item: an SVG icon with a thick black stroke,
@@ -332,32 +333,39 @@ const FOOD_SHAPES: FoodShape[] = [
   },
 ];
 
+/* ── Mobile-safe subset (4 items instead of 10) ── */
+const MOBILE_IDS = new Set(["pepper-1", "flame-1", "steak-1", "drumstick-1"]);
+
 /* ── Component ───────────────────────────────── */
 
 export default function FloatingFood() {
+  const isMobile = useIsMobile();
+  const shapes = isMobile
+    ? FOOD_SHAPES.filter((s) => MOBILE_IDS.has(s.id))
+    : FOOD_SHAPES;
+
   return (
     <div
       className="pointer-events-none fixed inset-0 z-[1] overflow-hidden"
       aria-hidden="true"
     >
-      {FOOD_SHAPES.map((shape) => (
+      {shapes.map((shape) => (
         <motion.div
           key={shape.id}
           className="absolute"
           style={{
             left: shape.left,
             top: shape.top,
-            width: shape.size,
-            height: shape.size,
+            width: isMobile ? shape.size * 0.7 : shape.size,
+            height: isMobile ? shape.size * 0.7 : shape.size,
           }}
-          /* Entrance animation — scale up + rotate in */
           initial={{
             opacity: 0,
             scale: 0,
             rotate: shape.rotate,
           }}
           animate={{
-            opacity: [0, 0.15, 0.12],
+            opacity: isMobile ? [0, 0.1, 0.08] : [0, 0.15, 0.12],
             scale: 1,
             rotate: shape.rotate,
           }}
@@ -367,20 +375,24 @@ export default function FloatingFood() {
             ease: "easeOut",
           }}
         >
-          {/* Continuous floating bob */}
-          <motion.div
-            animate={{
-              y: [0, -shape.floatDistance, 0, shape.floatDistance * 0.6, 0],
-              rotate: [0, 3, 0, -3, 0],
-            }}
-            transition={{
-              duration: shape.floatDuration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {shape.svg}
-          </motion.div>
+          {isMobile ? (
+            // Static on mobile — no continuous animation
+            shape.svg
+          ) : (
+            <motion.div
+              animate={{
+                y: [0, -shape.floatDistance, 0, shape.floatDistance * 0.6, 0],
+                rotate: [0, 3, 0, -3, 0],
+              }}
+              transition={{
+                duration: shape.floatDuration,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              {shape.svg}
+            </motion.div>
+          )}
         </motion.div>
       ))}
     </div>

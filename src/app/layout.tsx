@@ -85,7 +85,7 @@ export default function RootLayout({
             z={3}
           />
           <Navbar />
-          <main className="pt-24">{children}</main>
+          <main className="pt-20 md:pt-24">{children}</main>
           <Footer />
         </CartProvider>
       </body>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface FlameEffectProps {
   intensity?: "low" | "medium" | "high";
@@ -9,6 +10,7 @@ interface FlameEffectProps {
 
 const glowConfig = {
   low: {
+    static: "0 0 10px rgba(185, 28, 28, 0.6), 0 0 20px rgba(185, 28, 28, 0.3)",
     shadows: [
       "0 0 10px rgba(185, 28, 28, 0.6), 0 0 20px rgba(185, 28, 28, 0.3)",
       "0 0 15px rgba(234, 88, 12, 0.5), 0 0 30px rgba(234, 88, 12, 0.2)",
@@ -16,6 +18,7 @@ const glowConfig = {
     ],
   },
   medium: {
+    static: "0 0 20px rgba(185, 28, 28, 0.7), 0 0 40px rgba(185, 28, 28, 0.3)",
     shadows: [
       "0 0 20px rgba(185, 28, 28, 0.7), 0 0 40px rgba(185, 28, 28, 0.3), 0 -5px 30px rgba(234, 88, 12, 0.2)",
       "0 0 25px rgba(234, 88, 12, 0.6), 0 0 50px rgba(234, 88, 12, 0.3), 0 -8px 40px rgba(245, 158, 11, 0.2)",
@@ -24,6 +27,7 @@ const glowConfig = {
     ],
   },
   high: {
+    static: "0 0 30px rgba(185, 28, 28, 0.8), 0 0 60px rgba(185, 28, 28, 0.4), 0 -10px 50px rgba(234, 88, 12, 0.3)",
     shadows: [
       "0 0 30px rgba(185, 28, 28, 0.8), 0 0 60px rgba(185, 28, 28, 0.4), 0 -10px 50px rgba(234, 88, 12, 0.3), 0 0 100px rgba(185, 28, 28, 0.15)",
       "0 0 40px rgba(234, 88, 12, 0.7), 0 0 80px rgba(234, 88, 12, 0.35), 0 -15px 60px rgba(245, 158, 11, 0.3), 0 0 120px rgba(234, 88, 12, 0.1)",
@@ -39,7 +43,21 @@ export default function FlameEffect({
   children,
 }: FlameEffectProps) {
   const config = glowConfig[intensity];
+  const isMobile = useIsMobile();
 
+  // Mobile: static text-shadow, no animation — still looks good, zero repaint cost
+  if (isMobile) {
+    return (
+      <div
+        className="inline-block relative"
+        style={{ textShadow: config.static }}
+      >
+        <span className="relative z-10">{children}</span>
+      </div>
+    );
+  }
+
+  // Desktop: full animated glow
   return (
     <motion.div
       className="inline-block relative"
@@ -59,7 +77,7 @@ export default function FlameEffect({
         ease: "easeInOut",
       }}
     >
-      {/* Bottom flame edge — subtle upward glow */}
+      {/* Bottom flame edge glow */}
       <motion.div
         className="pointer-events-none absolute -inset-x-4 -bottom-2 h-8"
         animate={{
