@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Colors */
+  --color-heat-red: #B91C1C;
+  --color-heat-red-dark: #991B1B;
+  --color-heat-red-light: #DC2626;
+  --color-heat-black: #0A0A0A;
+  --color-heat-charcoal: #1C1917;
+  --color-heat-orange: #EA580C;
+  --color-heat-ember: #F59E0B;
+  --color-heat-white: #FAFAFA;
+  --color-heat-smoke: #292524;
+
+  /* Fonts */
+  --font-display: "Bebas Neue", Impact, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Animations */
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-flame: flame 2s ease-in-out infinite;
+  --animate-sizzle: sizzle 0.3s ease-out;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px) rotate(-1deg); }
+  75% { transform: translateX(4px) rotate(1deg); }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes flame {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.1); }
+}
+
+@keyframes sizzle {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-heat-black);
+  color: var(--color-heat-white);
+  font-family: var(--font-body);
 }
