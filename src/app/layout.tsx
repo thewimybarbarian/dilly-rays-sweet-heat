@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingFood from "@/components/effects/FloatingFood";
+import FloatingChili from "@/components/effects/FloatingChili";
 import { CartProvider } from "@/components/cart/CartProvider";
 
 const bebasNeue = Bebas_Neue({
@@ -65,6 +66,9 @@ export default function RootLayout({
       <body className="min-h-screen">
         <CartProvider>
           <FloatingFood />
+          <FloatingChili startX={78} startY={30} size={130} />
+          <FloatingChili startX={8} startY={55} size={95} bumpStrength={150} />
+          <FloatingChili startX={85} startY={72} size={75} bumpRadius={120} />
           <Navbar />
           <main className="pt-24">{children}</main>
           <Footer />
