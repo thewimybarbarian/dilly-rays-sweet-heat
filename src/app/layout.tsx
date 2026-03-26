@@ -66,7 +66,7 @@ export default function RootLayout({
         <CartProvider>
           <FloatingFood />
           <Navbar />
-          <main className="pt-16">{children}</main>
+          <main className="pt-24">{children}</main>
           <Footer />
         </CartProvider>
       </body>

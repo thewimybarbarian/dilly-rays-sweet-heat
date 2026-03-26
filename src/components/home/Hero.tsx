@@ -60,21 +60,34 @@ export default function Hero() {
       />
 
       <div className="relative z-10 flex flex-col items-center text-center px-4">
-        {/* Pig mascot logo */}
+        {/* Pig mascot logo — floating */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mb-6"
         >
-          <Image
-            src="/images/logo.jpg"
-            alt="Dilly Ray's Sweet Heat pig mascot"
-            width={180}
-            height={180}
-            priority
-            className="drop-shadow-[0_0_30px_rgba(185,28,28,0.5)] rounded-full border-4 border-heat-red"
-          />
+          <motion.div
+            animate={{
+              y: [0, -10, 0, 8, 0],
+              rotate: [0, -3, 2, -2, 0],
+              scale: [1, 1.02, 1, 0.98, 1],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 4,
+              ease: "easeInOut",
+            }}
+          >
+            <Image
+              src="/images/logo.jpg"
+              alt="Dilly Ray's Sweet Heat pig mascot"
+              width={180}
+              height={180}
+              priority
+              className="drop-shadow-[0_0_30px_rgba(185,28,28,0.5)] rounded-full border-4 border-heat-red"
+            />
+          </motion.div>
         </motion.div>
 
         {/* Title */}

@@ -14,29 +14,69 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-function FireLogo() {
+/* ── Mini flame SVG for the bottom border fire effect ── */
+function MiniFlame({
+  delay,
+  size,
+  color,
+}: {
+  delay: number;
+  size: number;
+  color: string;
+}) {
   return (
-    <svg
-      width="28"
-      height="34"
-      viewBox="0 0 28 34"
+    <motion.svg
+      width={size}
+      height={size * 1.4}
+      viewBox="0 0 20 28"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       className="shrink-0"
+      animate={{
+        scaleY: [1, 1.4, 0.8, 1.2, 1],
+        scaleX: [1, 0.9, 1.1, 0.95, 1],
+        opacity: [0.7, 1, 0.5, 0.9, 0.7],
+      }}
+      transition={{
+        repeat: Infinity,
+        duration: 0.8 + Math.random() * 0.6,
+        delay,
+        ease: "easeInOut",
+      }}
+      style={{ transformOrigin: "bottom center" }}
     >
       <path
-        d="M14 0C14 0 4 10 4 20C4 26.627 8.373 32 14 32C19.627 32 24 26.627 24 20C24 14 20 10 18 8C18 12 16 16 14 16C14 16 16 10 14 0Z"
-        fill="#DC2626"
+        d="M10 0C10 0 3 8 3 16c0 5.5 3.1 10 7 10s7-4.5 7-10C17 8 10 0 10 0z"
+        fill={color}
       />
       <path
-        d="M14 12C14 12 9 18 9 23C9 26.314 11.239 29 14 29C16.761 29 19 26.314 19 23C19 19 16 16 15 15C15 17.5 14.5 19 13.5 19C13.5 19 14 15 14 12Z"
+        d="M10 8c0 0-4 5-4 10c0 3 1.8 5 4 5s4-2 4-5C14 13 10 8 10 8z"
         fill="#EA580C"
+        opacity="0.8"
       />
       <path
-        d="M14 20C14 20 12 22 12 24.5C12 26.433 12.895 28 14 28C15.105 28 16 26.433 16 24.5C16 22.5 15 21 14.5 20.5C14.5 22 14.2 23 14 23C14 23 14 21.5 14 20Z"
+        d="M10 14c0 0-2 2.5-2 5c0 1.4.9 2.5 2 2.5s2-1.1 2-2.5C12 16.5 10 14 10 14z"
         fill="#F59E0B"
+        opacity="0.9"
       />
-    </svg>
+    </motion.svg>
+  );
+}
+
+/* ── Flame border — a row of flickering flames along the bottom ── */
+function FlameBorder() {
+  const flames = Array.from({ length: 28 }, (_, i) => ({
+    id: i,
+    delay: Math.random() * 0.5,
+    size: 10 + Math.random() * 10,
+    color: i % 3 === 0 ? "#DC2626" : i % 3 === 1 ? "#B91C1C" : "#991B1B",
+  }));
+
+  return (
+    <div className="pointer-events-none absolute -bottom-1 left-0 right-0 flex justify-between items-end overflow-hidden px-2">
+      {flames.map((f) => (
+        <MiniFlame key={f.id} delay={f.delay} size={f.size} color={f.color} />
+      ))}
+    </div>
   );
 }
 
@@ -47,52 +87,70 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-heat-black/95 backdrop-blur-sm border-b-4 border-heat-red">
-      {/* Subtle red glow under navbar */}
+      {/* Flame licks along the bottom border */}
+      <FlameBorder />
+
+      {/* Red glow under navbar */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 right-0 h-px"
         style={{
-          boxShadow: "0 2px 20px 4px rgba(185, 28, 28, 0.3)",
+          boxShadow:
+            "0 4px 30px 8px rgba(185, 28, 28, 0.4), 0 2px 15px 4px rgba(234, 88, 12, 0.2)",
         }}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+        <div className="flex h-24 items-center justify-between">
+          {/* Logo — bigger and floating */}
+          <Link href="/" className="flex items-center gap-3 group">
             <motion.div
-              animate={{ rotate: [0, -3, 3, -2, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              animate={{
+                y: [0, -5, 0, 4, 0],
+                rotate: [0, -3, 2, -2, 0],
+                scale: [1, 1.03, 1, 0.98, 1],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 3.5,
+                ease: "easeInOut",
+              }}
             >
               <Image
                 src="/images/logo.jpg"
                 alt="Dilly Ray's pig mascot"
-                width={36}
-                height={36}
-                className="rounded-full border-2 border-heat-red"
+                width={56}
+                height={56}
+                className="rounded-full border-3 border-heat-red drop-shadow-[0_0_12px_rgba(185,28,28,0.5)]"
               />
             </motion.div>
-            <span className="font-display text-xl tracking-[0.15em] text-heat-white uppercase group-hover:text-heat-red transition-colors">
-              Dilly Ray&apos;s
-            </span>
+            <div className="flex flex-col">
+              <span className="font-display text-2xl md:text-3xl tracking-[0.12em] text-heat-white uppercase leading-none group-hover:text-heat-red transition-colors">
+                Dilly Ray&apos;s
+              </span>
+              <span className="font-display text-[10px] md:text-xs tracking-[0.3em] text-heat-red/70 uppercase leading-none mt-0.5">
+                Sweet Heat
+              </span>
+            </div>
           </Link>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop nav links — bigger text */}
+          <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative font-display text-sm tracking-[0.2em] uppercase text-heat-white/80 hover:text-heat-white transition-colors"
+                className="group relative font-display text-lg tracking-[0.2em] uppercase text-heat-white/80 hover:text-heat-white transition-colors"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 h-[3px] w-0 bg-heat-red transition-all duration-300 group-hover:w-full" />
+                {/* Flame underline on hover */}
+                <span className="absolute -bottom-2 left-0 h-[3px] w-0 bg-gradient-to-r from-heat-red via-heat-orange to-heat-ember transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </div>
 
           {/* Right side: cart + mobile hamburger */}
-          <div className="flex items-center gap-4">
-            {/* Cart icon */}
+          <div className="flex items-center gap-5">
+            {/* Cart icon — bigger */}
             <button
               type="button"
               className="relative text-heat-white/80 hover:text-heat-red transition-colors"
@@ -105,7 +163,7 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6"
+                className="h-8 w-8"
               >
                 <path
                   strokeLinecap="round"
@@ -118,14 +176,14 @@ export default function Navbar() {
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center bg-heat-red border-2 border-heat-black text-[10px] font-bold text-heat-white"
+                  className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center bg-heat-red border-2 border-heat-black text-[11px] font-bold text-heat-white"
                 >
                   {itemCount}
                 </motion.span>
               )}
             </button>
 
-            {/* Hamburger */}
+            {/* Hamburger — bigger */}
             <button
               type="button"
               className="md:hidden text-heat-white hover:text-heat-red transition-colors"
@@ -138,7 +196,7 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 strokeWidth={2.5}
                 stroke="currentColor"
-                className="h-7 w-7"
+                className="h-9 w-9"
               >
                 <path
                   strokeLinecap="square"
@@ -158,11 +216,11 @@ export default function Navbar() {
             animate={{ clipPath: "circle(150% at 100% 0%)" }}
             exit={{ clipPath: "circle(0% at 100% 0%)" }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 bg-heat-red flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-50 bg-heat-red flex flex-col items-center justify-center gap-10 md:hidden"
           >
             <button
               type="button"
-              className="absolute top-4 right-4 text-heat-white hover:text-heat-black transition-colors"
+              className="absolute top-6 right-6 text-heat-white hover:text-heat-black transition-colors"
               aria-label="Close menu"
               onClick={() => setMobileOpen(false)}
             >
@@ -172,7 +230,7 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 strokeWidth={3}
                 stroke="currentColor"
-                className="h-8 w-8"
+                className="h-10 w-10"
               >
                 <path
                   strokeLinecap="square"
@@ -191,7 +249,7 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="font-display text-5xl tracking-[0.25em] uppercase text-heat-white hover:text-heat-black transition-colors"
+                  className="font-display text-6xl tracking-[0.25em] uppercase text-heat-white hover:text-heat-black transition-colors"
                 >
                   {link.label}
                 </Link>
