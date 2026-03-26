@@ -94,16 +94,18 @@ export default function FeaturedMenu() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <Card glow={item.heat_level >= 4}>
+              <Card glow={item.heat_level >= 4} className="group/item relative overflow-hidden">
+                {/* Hover reveal line — sweeps left to right */}
+                <div className="absolute top-0 left-0 h-1 w-0 bg-gradient-to-r from-heat-red via-heat-orange to-heat-ember group-hover/item:w-full transition-all duration-500" />
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-display text-xl sm:text-2xl text-heat-white tracking-wide uppercase">
+                  <h3 className="font-display text-xl sm:text-2xl text-heat-white tracking-wide uppercase transition-all duration-200 group-hover/item:text-heat-red group-hover/item:drop-shadow-[0_0_8px_rgba(185,28,28,0.5)]">
                     {item.name}
                   </h3>
-                  <span className="font-display text-2xl text-heat-red whitespace-nowrap ml-4">
+                  <span className="font-display text-2xl text-heat-red whitespace-nowrap ml-4 transition-all duration-200 group-hover/item:text-heat-orange group-hover/item:scale-110 origin-right">
                     {formatPrice(item.price)}
                   </span>
                 </div>
-                <p className="text-heat-white/50 font-body text-xs leading-relaxed mb-4">
+                <p className="text-heat-white/50 font-body text-xs leading-relaxed mb-4 transition-colors duration-200 group-hover/item:text-heat-white/70">
                   {item.description}
                 </p>
                 <HeatPeppers level={item.heat_level} />

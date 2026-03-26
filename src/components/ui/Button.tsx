@@ -14,11 +14,11 @@ export interface ButtonProps extends HTMLMotionProps<"button"> {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-heat-red text-heat-white border-4 border-heat-red shadow-[4px_4px_0px_0px_#0A0A0A] hover:shadow-[2px_2px_0px_0px_#0A0A0A] hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-heat-red-light active:shadow-none active:translate-x-1 active:translate-y-1",
+    "bg-heat-red text-heat-white border-4 border-heat-red shadow-[4px_4px_0px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_0px_#0A0A0A] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:bg-heat-red-light active:shadow-none active:translate-x-1 active:translate-y-1",
   secondary:
-    "bg-heat-black text-heat-red border-4 border-heat-red shadow-[4px_4px_0px_0px_#B91C1C] hover:shadow-[2px_2px_0px_0px_#B91C1C] hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-heat-red hover:text-heat-white active:shadow-none active:translate-x-1 active:translate-y-1",
+    "bg-heat-black text-heat-red border-4 border-heat-red shadow-[4px_4px_0px_0px_#B91C1C] hover:shadow-[8px_8px_0px_0px_#B91C1C] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:bg-heat-red hover:text-heat-white active:shadow-none active:translate-x-1 active:translate-y-1",
   ghost:
-    "bg-transparent text-heat-white border-4 border-heat-white/50 hover:border-heat-red hover:text-heat-red hover:bg-heat-red/5",
+    "bg-transparent text-heat-white border-4 border-heat-white/50 hover:border-heat-red hover:text-heat-red hover:bg-heat-red/10 hover:shadow-[0_0_20px_rgba(185,28,28,0.3)]",
 };
 
 const sizes: Record<ButtonSize, string> = {

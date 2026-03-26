@@ -72,19 +72,21 @@ export default function LocationStrip() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -4, x: -2 }}
-                className="bg-heat-black border-4 border-heat-black p-6 text-center shadow-[6px_6px_0px_0px_rgba(0,0,0,0.4)] cursor-default"
+                className="group/loc bg-heat-black border-4 border-heat-black hover:border-heat-red p-6 text-center shadow-[6px_6px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[8px_8px_0px_0px_rgba(185,28,28,0.5),0_0_25px_rgba(185,28,28,0.15)] cursor-default transition-all duration-200 relative overflow-hidden"
               >
-                <div className="font-display text-heat-red text-sm tracking-[0.3em]">
+                {/* Bottom accent line on hover */}
+                <div className="absolute bottom-0 left-0 h-1 w-0 bg-heat-orange group-hover/loc:w-full transition-all duration-400" />
+                <div className="font-display text-heat-red text-sm tracking-[0.3em] group-hover/loc:text-heat-orange transition-colors duration-200">
                   {month}
                 </div>
-                <div className="font-display text-heat-white text-6xl leading-none mt-1">
+                <div className="font-display text-heat-white text-6xl leading-none mt-1 group-hover/loc:text-heat-red transition-colors duration-200">
                   {day}
                 </div>
-                <div className="mt-4 h-[3px] w-8 mx-auto bg-heat-red" />
-                <h3 className="font-display text-heat-white text-lg tracking-wide uppercase mt-4">
+                <div className="mt-4 h-[3px] w-8 mx-auto bg-heat-red group-hover/loc:w-14 transition-all duration-300" />
+                <h3 className="font-display text-heat-white text-lg tracking-wide uppercase mt-4 group-hover/loc:tracking-[0.3em] transition-all duration-200">
                   {loc.name}
                 </h3>
-                <p className="font-body text-heat-white/50 text-xs mt-2">
+                <p className="font-body text-heat-white/50 text-xs mt-2 group-hover/loc:text-heat-white/70 transition-colors duration-200">
                   {formatTime(loc.start_time)} &ndash;{" "}
                   {formatTime(loc.end_time)}
                 </p>

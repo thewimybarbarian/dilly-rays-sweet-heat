@@ -139,10 +139,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="group relative font-display text-lg tracking-[0.2em] uppercase text-heat-white/80 hover:text-heat-white transition-colors"
+                  className="group relative font-display text-lg tracking-[0.2em] uppercase text-heat-white/80 hover:text-heat-white hover:scale-110 transition-all duration-200 origin-center"
                 >
                   {link.label}
+                  {/* Glowing underline sweep */}
                   <span className="absolute -bottom-2 left-0 h-[3px] w-0 bg-gradient-to-r from-heat-red via-heat-orange to-heat-ember transition-all duration-300 group-hover:w-full" />
+                  {/* Red glow halo on hover */}
+                  <span className="pointer-events-none absolute -inset-x-3 -inset-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-sm" style={{ boxShadow: "0 0 20px rgba(185, 28, 28, 0.3)" }} />
                 </Link>
               ))}
             </div>
