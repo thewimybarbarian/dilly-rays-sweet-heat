@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingFood from "@/components/effects/FloatingFood";
-import FloatingChili from "@/components/effects/FloatingChili";
+import FloatingBumper from "@/components/effects/FloatingBumper";
 import { CartProvider } from "@/components/cart/CartProvider";
 
 const bebasNeue = Bebas_Neue({
@@ -66,9 +66,24 @@ export default function RootLayout({
       <body className="min-h-screen">
         <CartProvider>
           <FloatingFood />
-          <FloatingChili startX={78} startY={30} size={130} />
-          <FloatingChili startX={8} startY={55} size={95} bumpStrength={150} />
-          <FloatingChili startX={85} startY={72} size={75} bumpRadius={120} />
+          {/* Interactive flame-chili peppers */}
+          <FloatingBumper src="/images/flame-chill.png" alt="Flaming chili pepper" startX={78} startY={30} size={130} />
+          <FloatingBumper src="/images/flame-chill.png" alt="Flaming chili pepper" startX={8} startY={55} size={95} bumpStrength={150} />
+          <FloatingBumper src="/images/flame-chill.png" alt="Flaming chili pepper" startX={85} startY={72} size={75} bumpRadius={120} />
+          {/* Interactive pig mascot */}
+          <FloatingBumper
+            src="/images/pig.png"
+            alt="Dilly Ray's pig mascot"
+            startX={15}
+            startY={25}
+            size={160}
+            bumpRadius={180}
+            bumpStrength={100}
+            bobDuration={6}
+            bobDistance={16}
+            glowColor="rgba(185,28,28,0.3)"
+            z={3}
+          />
           <Navbar />
           <main className="pt-24">{children}</main>
           <Footer />
