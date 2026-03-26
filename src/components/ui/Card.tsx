@@ -12,16 +12,23 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     return (
       <motion.div
         ref={ref}
-        whileHover={{ y: -4 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className={`bg-heat-black border-4 border-heat-red p-6 shadow-[8px_8px_0px_0px_rgba(185,28,28,0.4)] ${
-          glow ? "animate-[glow_2s_ease-in-out_infinite] shadow-heat-red/60" : ""
-        } ${className}`}
+        whileHover={{
+          y: -6,
+          x: -3,
+          boxShadow: "12px 12px 0px 0px rgba(185, 28, 28, 0.7)",
+          transition: { type: "spring", stiffness: 400, damping: 15 },
+        }}
+        className={`
+          bg-heat-black border-4 border-heat-red p-6
+          shadow-[6px_6px_0px_0px_rgba(185,28,28,0.5)]
+          transition-[border-color] duration-200
+          hover:border-heat-red-light
+          ${glow ? "" : ""}
+          ${className}
+        `}
         style={
           glow
-            ? {
-                animation: "glow 2s ease-in-out infinite",
-              }
+            ? { animation: "glow 2s ease-in-out infinite" }
             : undefined
         }
         {...props}

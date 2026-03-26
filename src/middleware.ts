@@ -11,10 +11,17 @@ export async function middleware(request: NextRequest) {
   // Pass pathname to server components via header
   response.headers.set("x-next-pathname", request.nextUrl.pathname);
 
+  // Skip Supabase session refresh if env vars aren't configured yet
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!supabaseUrl || !supabaseKey) {
+    return response;
+  }
+
   // Refresh Supabase session on every request so cookies stay fresh
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {

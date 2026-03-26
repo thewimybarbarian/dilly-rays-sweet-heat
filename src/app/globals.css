@@ -3,8 +3,9 @@
 @theme {
   /* Colors */
   --color-heat-red: #B91C1C;
-  --color-heat-red-dark: #991B1B;
+  --color-heat-red-dark: #7F1D1D;
   --color-heat-red-light: #DC2626;
+  --color-heat-crimson: #991B1B;
   --color-heat-black: #0A0A0A;
   --color-heat-charcoal: #1C1917;
   --color-heat-orange: #EA580C;
@@ -14,7 +15,7 @@
 
   /* Fonts */
   --font-display: "Bebas Neue", Impact, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-body: "Space Mono", "Courier New", monospace;
 
   /* Animations */
   --animate-shake: shake 0.5s ease-in-out;
@@ -24,8 +25,11 @@
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px) rotate(-1deg); }
-  75% { transform: translateX(4px) rotate(1deg); }
+  10% { transform: translateX(-6px) rotate(-2deg); }
+  30% { transform: translateX(5px) rotate(1.5deg); }
+  50% { transform: translateX(-3px) rotate(-1deg); }
+  70% { transform: translateX(4px) rotate(0.5deg); }
+  90% { transform: translateX(-2px); }
 }
 
 @keyframes flame {
@@ -40,12 +44,62 @@
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(185, 28, 28, 0.4); }
-  50% { box-shadow: 0 0 25px rgba(185, 28, 28, 0.8); }
+  0%, 100% { box-shadow: 0 0 10px rgba(185, 28, 28, 0.4), 0 0 30px rgba(185, 28, 28, 0.15); }
+  50% { box-shadow: 0 0 25px rgba(185, 28, 28, 0.8), 0 0 60px rgba(234, 88, 12, 0.3); }
+}
+
+@keyframes grain-drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  5% { opacity: 0.85; }
+  10% { opacity: 1; }
+  40% { opacity: 0.92; }
+  44% { opacity: 1; }
 }
 
 body {
   background-color: var(--color-heat-black);
   color: var(--color-heat-white);
   font-family: var(--font-body);
+}
+
+/* ── Global grain texture ─────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  animation: grain-drift 8s ease-in-out infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Brutalist selection ──────────────────────── */
+::selection {
+  background-color: var(--color-heat-red);
+  color: var(--color-heat-white);
+}
+
+/* ── Brutalist scrollbar ──────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-heat-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-heat-red);
+  border: 2px solid var(--color-heat-black);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-heat-red-light);
 }

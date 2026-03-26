@@ -1,26 +1,64 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { formatPrice } from "@/lib/utils";
 
 const FEATURED_ITEMS = [
-  { id: "1", name: "Sweet Heat Wings", price: 1499, heat_level: 4, description: "Crispy wings tossed in our signature sweet heat glaze" },
-  { id: "2", name: "Smoked Brisket Plate", price: 1799, heat_level: 2, description: "12-hour smoked brisket with two sides" },
-  { id: "3", name: "The Bus Burger", price: 1499, heat_level: 3, description: "Double smash burger with pepper jack and jalape\u00f1os" },
-  { id: "4", name: "Dilly Ray's Secret Sauce", price: 899, heat_level: 5, description: "Our legendary sauce \u2014 if you can handle it" },
+  {
+    id: "1",
+    name: "Sweet Heat Wings",
+    price: 1499,
+    heat_level: 4,
+    description: "Crispy wings tossed in our signature sweet heat glaze",
+  },
+  {
+    id: "2",
+    name: "Smoked Brisket Plate",
+    price: 1799,
+    heat_level: 2,
+    description: "12-hour smoked brisket with two sides",
+  },
+  {
+    id: "3",
+    name: "The Bus Burger",
+    price: 1499,
+    heat_level: 3,
+    description: "Double smash burger with pepper jack and jalape\u00f1os",
+  },
+  {
+    id: "4",
+    name: "Dilly Ray's Secret Sauce",
+    price: 899,
+    heat_level: 5,
+    description: "Our legendary sauce \u2014 if you can handle it",
+  },
 ];
 
-function HeatRating({ level }: { level: number }) {
+function HeatPeppers({ level }: { level: number }) {
   return (
-    <span className="text-lg" aria-label={`Heat level ${level} out of 5`}>
+    <div className="flex items-center gap-1" aria-label={`Heat level ${level} out of 5`}>
       {Array.from({ length: 5 }, (_, i) => (
-        <span key={i} className={i < level ? "opacity-100" : "opacity-20"}>
-          🌶️
-        </span>
+        <svg
+          key={i}
+          width="14"
+          height="14"
+          viewBox="0 0 40 40"
+          className={`${i < level ? "opacity-100" : "opacity-15"} transition-opacity`}
+        >
+          <path
+            d="M18 6c0-2 1-4 3-5 1.5 1.5 1 3 0 5z"
+            fill={i < level ? "#16A34A" : "#666"}
+          />
+          <path
+            d="M20 8c-4 0-7 3-9 7-2 5-2.5 10-1 14 1 3 3 5 5.5 6.5 2.5 1.5 5 1 7-.5 3-2.5 5-7 5.5-12 .5-4 0-8-1.5-11C24 9 22 8 20 8z"
+            fill={i < level ? "#DC2626" : "#444"}
+          />
+        </svg>
       ))}
-    </span>
+    </div>
   );
 }
 
@@ -28,33 +66,58 @@ export default function FeaturedMenu() {
   const router = useRouter();
 
   return (
-    <section className="bg-heat-black py-20 px-4">
+    <section className="bg-heat-black py-24 px-4 border-t-4 border-heat-red relative">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-heat-white text-center tracking-wide">
-          TASTE THE HEAT
-          <span className="block mt-2 mx-auto w-24 h-1 bg-heat-red" />
-        </h2>
+        {/* Section heading with thick brutalist accent */}
+        <div className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-5xl sm:text-6xl md:text-7xl text-heat-white tracking-wide"
+          >
+            TASTE THE HEAT
+          </motion.h2>
+          <div className="mt-4 mx-auto flex items-center justify-center gap-3">
+            <div className="h-1 w-16 bg-heat-red" />
+            <div className="h-3 w-3 bg-heat-red rotate-45" />
+            <div className="h-1 w-16 bg-heat-red" />
+          </div>
+        </div>
 
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {FEATURED_ITEMS.map((item) => (
-            <Card key={item.id} glow={item.heat_level >= 4}>
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-display text-xl sm:text-2xl text-heat-white tracking-wide uppercase">
-                  {item.name}
-                </h3>
-                <span className="font-display text-xl text-heat-red whitespace-nowrap ml-4">
-                  {formatPrice(item.price)}
-                </span>
-              </div>
-              <p className="text-heat-white/60 font-body mb-3">
-                {item.description}
-              </p>
-              <HeatRating level={item.heat_level} />
-            </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {FEATURED_ITEMS.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <Card glow={item.heat_level >= 4}>
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="font-display text-xl sm:text-2xl text-heat-white tracking-wide uppercase">
+                    {item.name}
+                  </h3>
+                  <span className="font-display text-2xl text-heat-red whitespace-nowrap ml-4">
+                    {formatPrice(item.price)}
+                  </span>
+                </div>
+                <p className="text-heat-white/50 font-body text-xs leading-relaxed mb-4">
+                  {item.description}
+                </p>
+                <HeatPeppers level={item.heat_level} />
+              </Card>
+            </motion.div>
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-14 text-center"
+        >
           <Button
             size="lg"
             variant="secondary"
@@ -62,7 +125,7 @@ export default function FeaturedMenu() {
           >
             SEE FULL MENU &rarr;
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

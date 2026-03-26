@@ -13,9 +13,12 @@ export interface ButtonProps extends HTMLMotionProps<"button"> {
 }
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-heat-red text-heat-white border-4 border-heat-black hover:bg-heat-red-light",
-  secondary: "bg-heat-black text-heat-red border-4 border-heat-red hover:bg-heat-charcoal",
-  ghost: "bg-transparent text-heat-white border-4 border-heat-white hover:bg-heat-white/10",
+  primary:
+    "bg-heat-red text-heat-white border-4 border-heat-red shadow-[4px_4px_0px_0px_#0A0A0A] hover:shadow-[2px_2px_0px_0px_#0A0A0A] hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-heat-red-light active:shadow-none active:translate-x-1 active:translate-y-1",
+  secondary:
+    "bg-heat-black text-heat-red border-4 border-heat-red shadow-[4px_4px_0px_0px_#B91C1C] hover:shadow-[2px_2px_0px_0px_#B91C1C] hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-heat-red hover:text-heat-white active:shadow-none active:translate-x-1 active:translate-y-1",
+  ghost:
+    "bg-transparent text-heat-white border-4 border-heat-white/50 hover:border-heat-red hover:text-heat-red hover:bg-heat-red/5",
 };
 
 const sizes: Record<ButtonSize, string> = {
@@ -26,18 +29,32 @@ const sizes: Record<ButtonSize, string> = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", size = "md", sizzle = false, className = "", children, ...props }, ref) => {
+  (
+    {
+      variant = "primary",
+      size = "md",
+      sizzle = false,
+      className = "",
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <motion.button
         ref={ref}
-        whileHover={sizzle ? { scale: 1.05, rotate: [-1, 1, -1, 0] } : { scale: 1.02 }}
+        whileHover={
+          sizzle
+            ? { scale: 1.03, rotate: [-0.5, 0.5, -0.5, 0] }
+            : undefined
+        }
         whileTap={{ scale: 0.97 }}
-        className={`font-display uppercase tracking-widest cursor-pointer transition-colors ${variants[variant]} ${sizes[size]} ${className}`}
+        className={`font-display uppercase tracking-widest cursor-pointer transition-all duration-150 ${variants[variant]} ${sizes[size]} ${className}`}
         {...props}
       >
         {children}
       </motion.button>
     );
-  }
+  },
 );
 Button.displayName = "Button";

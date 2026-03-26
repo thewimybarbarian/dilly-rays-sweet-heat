@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Inter } from "next/font/google";
+import { Bebas_Neue, Space_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingFood from "@/components/effects/FloatingFood";
 import { CartProvider } from "@/components/cart/CartProvider";
 
 const bebasNeue = Bebas_Neue({
@@ -11,7 +12,8 @@ const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
 });
 
-const inter = Inter({
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
   variable: "--font-body",
   subsets: ["latin"],
 });
@@ -59,9 +61,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${inter.variable}`}>
+    <html lang="en" className={`${bebasNeue.variable} ${spaceMono.variable}`}>
       <body className="min-h-screen">
         <CartProvider>
+          <FloatingFood />
           <Navbar />
           <main className="pt-16">{children}</main>
           <Footer />
