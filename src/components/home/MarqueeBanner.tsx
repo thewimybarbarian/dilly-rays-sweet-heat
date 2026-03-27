@@ -1,8 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
 
 const MARQUEE_ITEMS = [
   "SMOKED BRISKET",
@@ -60,49 +57,35 @@ function MarqueeContent() {
 
 export default function MarqueeBanner() {
   return (
-    <section className="relative bg-heat-red border-y-4 border-heat-black overflow-hidden">
-      {/* Diagonal hash pattern overlay */}
+    <section className="relative overflow-hidden py-6 sm:py-8">
+      {/* Diagonal rotated strip — wider than viewport to cover corners */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
+        className="relative bg-heat-red border-y-4 border-heat-black"
         style={{
-          backgroundImage:
-            "repeating-linear-gradient(45deg, transparent, transparent 10px, #000 10px, #000 12px)",
+          width: "120%",
+          marginLeft: "-10%",
+          transform: "rotate(-3deg)",
         }}
-      />
+      >
+        {/* Diagonal hash pattern overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(45deg, transparent, transparent 10px, #000 10px, #000 12px)",
+          }}
+        />
 
-      {/* CTA row with button */}
-      <div className="relative z-10 flex items-center justify-center gap-4 sm:gap-6 py-3 px-4 border-b-2 border-heat-black/20">
-        <span className="font-display text-lg sm:text-xl md:text-2xl tracking-[0.2em] uppercase text-heat-white">
-          HUNGRY?
-        </span>
-        <Link href="/menu">
-          <Button
-            variant="secondary"
-            size="sm"
-            sizzle
-            className="!bg-heat-black !text-heat-white !border-heat-black hover:!bg-heat-white hover:!text-heat-black !shadow-[3px_3px_0px_0px_rgba(0,0,0,0.4)]"
-          >
-            ORDER NOW
-          </Button>
-        </Link>
-        <motion.span
-          className="hidden sm:inline font-display text-lg sm:text-xl md:text-2xl tracking-[0.2em] uppercase text-heat-white"
-          animate={{ opacity: [1, 0.5, 1] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        >
-          🔥
-        </motion.span>
-      </div>
-
-      {/* Scrolling marquee */}
-      <div className="relative py-3 sm:py-4">
-        <div className="marquee-track flex">
-          {/* Two copies for seamless infinite scroll */}
-          <div className="marquee-content flex items-center shrink-0">
-            <MarqueeContent />
-          </div>
-          <div className="marquee-content flex items-center shrink-0" aria-hidden="true">
-            <MarqueeContent />
+        {/* Scrolling marquee */}
+        <div className="relative py-3 sm:py-4">
+          <div className="marquee-track flex">
+            {/* Two copies for seamless infinite scroll */}
+            <div className="marquee-content flex items-center shrink-0">
+              <MarqueeContent />
+            </div>
+            <div className="marquee-content flex items-center shrink-0" aria-hidden="true">
+              <MarqueeContent />
+            </div>
           </div>
         </div>
       </div>
